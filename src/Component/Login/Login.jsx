@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Link } from 'react-router';
+// import Swal from 'sweetalert2'
+// or via CommonJS
+// const Swal = require('sweetalert2')
+import { AuthContext } from '../../Context/AuthContext';
 
 const Login = () => {
+  const {singinUser, loginONGoogle,} = use(AuthContext)
+  console.log(singinUser, '--------------------------')
 
   const handleSubmit = (e) =>{
-
-
       e.preventDefault()
     const email = e.target.email.value;
     const password = e.target.password.value;
     console.log(email, password)
 
+    singinUser(email, password)
+    .then((result) =>{
+      {<Navigator to="/"></Navigator>}
+      console.log(result)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }
 
 

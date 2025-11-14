@@ -6,11 +6,13 @@ import {
   RouterProvider,
 } from "react-router";
 import { routes } from './routers/routes.jsx';
+import AuthProvider from './Context/AuthProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* <App /> */}
-    <RouterProvider router={routes}/>
+    <AuthProvider>
+      {<RouterProvider router={routes}/>}
+    </AuthProvider>
   </StrictMode>,
 )
 
