@@ -11,8 +11,37 @@ const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null)
 
 
-    const createUser = (email, password)=>{
-        return createUserWithEmailAndPassword(auth, email, password)
+    const createUser = (email, password, name, imageUrl)=>{
+        // return createUserWithEmailAndPassword(auth, email, password)
+        const createUasrONRegester = ()=>{
+            createUserWithEmailAndPassword(auth, email, password)
+            .then(result => {
+                console.log(result.user)
+
+                fetch("http://localhost:3000/users",{
+                    method:"POST",
+                    headers :{
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: result.user.displayName,
+                        email:email,
+                        imageUrl:imageUrl
+                    })
+                })
+                    .then(res=> res.json())
+                    .then(data => {
+                        console.log(data, "--------------------")
+                    })
+
+            })
+            .catch(error => {
+                console.log(error)
+            })
+        }
+
+        return createUasrONRegester()
+
 
     }
 

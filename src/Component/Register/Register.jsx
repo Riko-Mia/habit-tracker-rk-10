@@ -14,8 +14,12 @@ const {createUser} = use(AuthContext)
     const imageUrl = e.target.url.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
+
+
     
-    createUser( email, password)
+
+    
+    createUser( email, password, name, imageUrl)
 
 
 
