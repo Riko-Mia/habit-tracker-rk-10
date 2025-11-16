@@ -1,26 +1,34 @@
 import React, { use } from 'react';
 import { Link } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
+import { toast } from 'react-toastify';
 
 const Register = () => {
 
-const {createUser, loginONGoogle,} = use(AuthContext)
+const {createUser} = use(AuthContext)
   // console.log(singinUser, '--------------------------')
 
   const handleSubmit = (e) =>{
       e.preventDefault()
+    const name = e.target.name.value;
+    const imageUrl = e.target.url.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password)
+    
+    createUser( email, password)
 
-    createUser(email, password)
+
+
     .then((result) =>{
       {<Navigator to="/"></Navigator>}
       console.log(result)
+      toast.success("Register Done")
+      e.target.reset()
     })
     .catch((error) => {
       console.log(error)
     })
+    console.log(createUser)
   }
 
   
@@ -39,8 +47,17 @@ const {createUser, loginONGoogle,} = use(AuthContext)
       <div className="card-body">
         <form onSubmit={handleSubmit}>
           <fieldset className="fieldset">
+            {/* Name */}
+          <label className="label">Full Name</label>
+          <input type="text" className="input" name='name' placeholder="Name" />
+          {/* imgUrl */}
+          <label className="label">Image Url</label>
+          <input type="text" className="input" name='url' placeholder="Image Url" />
+
+          {/* Email */}
           <label className="label">Email</label>
           <input type="email" className="input" name='email' placeholder="Email" />
+          {/* Password */}
           <label className="label">Password</label>
           <input type="password" className="input" name='password' placeholder="Password" />
           {/* <div><a className="link link-hover">Forgot password?</a></div> */}

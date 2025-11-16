@@ -1,14 +1,51 @@
-import React from 'react';
-import { NavLink } from 'react-router';
+import React, { use } from 'react';
+import { Link, NavLink } from 'react-router';
+import { AuthContext } from '../../Context/AuthContext';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 const Navbar = () => {
+  const {user, signOutUser}= use(AuthContext)
+  // const [users, setUsers] = useState(null)
+  // const [loading, setLoading] = useState(true);
+
+  const handleSingOut =()=>{
+    signOutUser()
+    .then((result) =>{
+      toast.success("User log Out")
+    })
+    .catch((error) =>{
+      alert("User Can't log Out")
+      console.log(error)
+    })
+  }
+
+
+  // console.log(user.providerData[0].displayName)
+
+    // useEffect(()=>{
+    // console.log(user.photoURL)
+  //   setUsers(user)
+  //   setLoading(false)
+  // }, [user])
+  
+  // useEffect(()=>{
+  //   console.log(urlImg)
+
+  // }, [urlImg])
+
+
+
         const navLink = (
           <div className='text-[20px] space-x-8  lg:flex '>
         <li><NavLink to="/" >Home</NavLink></li>
         <li><NavLink to="/login" >Log in</NavLink></li>
         <li><NavLink to="/register" >Register</NavLink></li>
-        {}
-        <li><NavLink to="/myHabits" >My Habits</NavLink></li>
+        {user?<li><NavLink to="/myHabits" >My Habits</NavLink></li>: "" }
+        {user?<li><NavLink to="/createHabits" >Create Habits</NavLink></li>: "" }
+        <li><NavLink to="/allHabits" >All Habits</NavLink></li>
+        
 
        </div>
         )
@@ -42,7 +79,7 @@ const Navbar = () => {
         <div className="w-10 rounded-full">
           <img
             alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" /> 
         </div>
       </div>
       <ul
@@ -61,7 +98,8 @@ const Navbar = () => {
 
 
 
-    <a className="btn">Sing IN</a>
+    
+    {user?<Link onClick={handleSingOut} className="btn">Logout</Link>:  <Link to="/login" className="btn">Sing IN</Link>}
   </div>
 </div>
         </div>

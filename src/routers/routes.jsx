@@ -7,6 +7,8 @@ import ErrorPage from "../error/Error";
 import LoginUI from "../Component/Login/LoginUiVerse";
 import PrivetRout from "./PrivetRout";
 import myHabits from './../Component/MyHabits/myHabits';
+import CreateHabits from "../Component/CreateHabits/CreateHabits";
+import AllHabits from "../Component/AllHabits/AllHabits";
 
 
 
@@ -32,6 +34,14 @@ export const routes = createBrowserRouter([
             {
                 path: "/myHabits",
                 element:<PrivetRout><myHabits></myHabits></PrivetRout>
+            },
+            {
+                path:"/createHabits",
+                element: <PrivetRout><CreateHabits></CreateHabits></PrivetRout>
+            },
+            {
+                path:"/allHabits",
+                element: <AllHabits></AllHabits>
             }
 
         ]
