@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { auth } from './../firebase/firebase.config';
-import {  createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import {  createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { toast } from 'react-toastify';
 
 
@@ -13,20 +13,33 @@ const AuthProvider = ({children}) => {
 
     const createUser = (email, password, name, imageUrl)=>{
         // return createUserWithEmailAndPassword(auth, email, password)
-        const createUasrONRegester = ()=>{
+
+
+
+
+
+
+        const createUasrONRegester = async()=>{
             createUserWithEmailAndPassword(auth, email, password)
-            .then(result => {
+            .then(async (result) => {
                 console.log(result.user)
+                
+                const user = result.user
+                await updateProfile(user,{
+                    displayName:name,
+                    photoURL:imageUrl
+                })
 
                 fetch("http://localhost:3000/users",{
                     method:"POST",
                     headers :{
                         "content-type" : "application/json"
                     },
-                    body: JSON.stringify({
-                        name: result.user.displayName,
+                    body: await JSON.stringify({
                         email:email,
-                        imageUrl:imageUrl
+                        displayName:user.displayName,
+                        photoURL: user.photoURL,
+
                     })
                 })
                     .then(res=> res.json())
@@ -54,8 +67,27 @@ const AuthProvider = ({children}) => {
 
     const loginONGoogle = (googleProvider)=>{
         signInWithPopup(auth, googleProvider)
-        .then((result) =>{
+
+        .then(async(result) =>{
                 console.log(result)
+
+                fetch("http://localhost:3000/users",{
+                    method:"POST",
+                    headers :{
+                        "content-type" : "application/json"
+                    },
+                    body: await JSON.stringify({
+                        email:result.user.email,
+                        displayName:result.user.displayName,
+                        photoURL: result.user.photoURL,
+
+                    })
+                })
+                    .then(res=> res.json())
+                    .then(data => {
+                        console.log(data, "--------------------")
+                    })
+
                 toast.success("Sing In with Google Successfully")
                 // setUser()
             })

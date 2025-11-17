@@ -24,15 +24,15 @@ const {createUser} = use(AuthContext)
 
 
     .then((result) =>{
-      {<Navigator to="/"></Navigator>}
       console.log(result)
       toast.success("Register Done")
       e.target.reset()
+      {<Navigator to="/allHabits"></Navigator>}
     })
     .catch((error) => {
       console.log(error)
     })
-    console.log(createUser)
+    // console.log(createUser)
   }
 
   

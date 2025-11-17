@@ -13,9 +13,25 @@ const CreateHabits = () => {
              title : e.target.title.value, 
              category : e.target.category.value, 
              description : e.target.description.value, 
-             imageURL : e.target.imageURL.value, 
+             imageURL : e.target.imageURL.value,
         }
         
+
+        fetch("http://localhost:3000/createHabits",{
+                    method:"POST",
+                    headers :{
+                        "content-type" : "application/json"
+                    },
+                    body: JSON.stringify(CreateHabit)
+                })
+                    .then(res=> res.json())
+                    .then(data => {
+                        console.log(data, "--------------------")
+                    })
+                    .catch(error => {
+                      console.log(error)
+                    })
+
         console.log(CreateHabit)
     
     }
