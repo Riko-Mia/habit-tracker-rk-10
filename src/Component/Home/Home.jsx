@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Slider from '../slider/Slider';
+import FeaturedHabits from './FeaturedHabits';
 
 const Home = () => {
+
+
+      
+
     return (
-        <div>
-            <h1>Home page....</h1>
-        </div>
+        <>
+            <Slider></Slider>
+            <FeaturedHabits></FeaturedHabits>
+        </>
     );
 };
 

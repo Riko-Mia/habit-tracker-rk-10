@@ -8,14 +8,16 @@ const CreateHabits = () => {
         e.preventDefault()
         
         const CreateHabit= {
+            userId: user._id,
              name : user.displayName,
              email : user.email,
              title : e.target.title.value, 
              category : e.target.category.value, 
              description : e.target.description.value, 
              imageURL : e.target.imageURL.value,
+             createdAt: new Date()
         }
-        
+        console.log(user)
 
         fetch("http://localhost:3000/createHabits",{
                     method:"POST",
@@ -26,7 +28,7 @@ const CreateHabits = () => {
                 })
                     .then(res=> res.json())
                     .then(data => {
-                        console.log(data, "--------------------")
+                        console.log(data, "--------------------", data.createdAt)
                     })
                     .catch(error => {
                       console.log(error)
