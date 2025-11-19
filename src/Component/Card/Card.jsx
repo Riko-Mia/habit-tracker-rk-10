@@ -1,22 +1,31 @@
 
-// Define the main App component that renders the card
-// const Card = () => {
-//   return (
-//     <div className="min-h-screen p-4 sm:p-8 flex items-center justify-center bg-[#d8d4e9] font-inter">
-//       <ProductCard product={MOCK_PRODUCT} />
-//       <ProductCard product={MOCK_PRODUCT} />
-//       <ProductCard product={MOCK_PRODUCT} />
-//     </div>
-//   );
-// };
+
+import { use } from "react";
+import { AuthContext } from "../../Context/AuthContext";
+import { Link, Navigate,  } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 // The Product Card Component
-const Card = ( {product} ) => {
 
-  const handelViewDetails = (id) => {
-    console.log(id)
+
+// const navigate = useNavigate() 
+const Card = ( {product} ) => {
+  const navigate = useNavigate() 
+  const {user} = use(AuthContext)
+
+  const handelViewDetails = (habit) => {
+    if(user === null){
+      console.log("can't no find user")
+
+      navigate("/login");
+    }
+    if(habit){
+      // console.log(habit._id, habit)
+      navigate(`/details/${habit._id}`);
+    }
+
   };
-  console.log(product.title)
+  // console.log(product.title)
   
 
   const des = product.description.split(' ').splice(0, 20).join(' ')
@@ -25,7 +34,7 @@ const Card = ( {product} ) => {
 
 
   return (
-    <div className="w-full max-w-sm rounded-xl shadow-2xl overflow-hidden bg-lime-50">
+    <div className="w-full justify-center max-w-sm rounded-xl shadow-2xl overflow-hidden bg-lime-50">
       <div className="relative flex justify-center items-end h-64 rounded-t-xl"
            style={{ background: 'linear-gradient(135deg, #a7a1c7 0%, #6e5f8f 100%)' }}>
         
@@ -45,7 +54,7 @@ const Card = ( {product} ) => {
           <span className="text-xs font-medium text-gray-700 uppercase px-2 py-1 border border-gray-300 rounded-md">
           Category: {product.category}
           </span>
-          <div className=" font-medium text-gray-700 lowercase  py-1 ">
+          <div className=" font-medium text-gray-700  py-1 ">
            Created by: {product.email}
           </div>
         {/* <div className="flex space-x-2 mb-4">
@@ -59,7 +68,7 @@ const Card = ( {product} ) => {
         <div className="flex items-center pt-4 border-t border-gray-100">
           
           <button 
-            onClick={()=>{handelViewDetails(product._id)}} 
+            onClick={()=>{handelViewDetails(product)}} 
             className="px-6 py-3 bg-[#6e5f8f] text-white font-semibold rounded-lg shadow-lg transition-all duration-300 hover:bg-[#584b73] hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-purple-300 active:scale-95"
           >
             View Details

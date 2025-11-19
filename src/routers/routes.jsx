@@ -6,9 +6,10 @@ import Register from "../Component/Register/Register";
 import ErrorPage from "../error/Error";
 import LoginUI from "../Component/Login/LoginUiVerse";
 import PrivetRout from "./PrivetRout";
-import myHabits from './../Component/MyHabits/myHabits';
 import CreateHabits from "../Component/CreateHabits/CreateHabits";
 import AllHabits from "../Component/AllHabits/AllHabits";
+import Details from "../Component/Details/Details";
+import MyHabits from "../Component/MyHabits/MyHabits";
 
 
 
@@ -32,15 +33,22 @@ export const routes = createBrowserRouter([
                 Component: Register,
             },
             {
-                path: "/myHabits",
-                element:<PrivetRout><myHabits></myHabits></PrivetRout>
+                // loader:() => fetch()
+                path: `/myHabits/:email`,
+                element:<PrivetRout><MyHabits></MyHabits></PrivetRout>
             },
             {
                 path:"/createHabits",
                 element: <PrivetRout><CreateHabits></CreateHabits></PrivetRout>
             },
             {
+                loader:() => fetch("http://localhost:3000/habits"),
+                path:"/details/:id",
+                element: <PrivetRout><Details></Details></PrivetRout>
+            },
+            {
                 path:"/allHabits",
+                // loader:() => fetch("http://localhost:3000/habits"),
                 element: <AllHabits></AllHabits>
             }
 

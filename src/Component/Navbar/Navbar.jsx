@@ -42,7 +42,7 @@ const Navbar = () => {
         <li><NavLink to="/" >Home</NavLink></li>
         <li><NavLink to="/login" >Log in</NavLink></li>
         <li><NavLink to="/register" >Register</NavLink></li>
-        {user?<li><NavLink to="/myHabits" >My Habits</NavLink></li>: "" }
+        {user?<li><NavLink to={`/myHabits/${user.email}`} >My Habits</NavLink></li>: "" }
         {user?<li><NavLink to="/createHabits" >Create Habits</NavLink></li>: "" }
         <li><NavLink to="/allHabits" >All Habits</NavLink></li>
         
