@@ -15,7 +15,8 @@ const CreateHabits = () => {
              category : e.target.category.value, 
              description : e.target.description.value, 
              imageURL : e.target.imageURL.value,
-             createdAt: new Date()
+             createdAt: new Date(),
+             timestamps: true 
         }
         console.log(user)
 
