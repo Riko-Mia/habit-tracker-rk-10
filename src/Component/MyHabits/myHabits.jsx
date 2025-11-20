@@ -3,6 +3,7 @@ import { AuthContext } from '../../Context/AuthContext';
 
 const MyHabits = () => {
     const [myHabit, setMyHabit] = useState([])
+    const [localId, setLocalId] = useState('')
 
     const {user} = use(AuthContext);
     useEffect(() =>{
@@ -19,25 +20,24 @@ const MyHabits = () => {
         }
     }, [user?.email])
 
-    const handleUpdate= (e, id)=>{
-    document.getElementById("my_modal_5").showModal()
-    
+    const handleUpdate= (id)=>{
+      setLocalId(id)
+    }
     
 
-    // const handleModalSubmit = (e, id) =>{
-      // console.log("handle modal box finished")
+    const handleModalSubmit = (e) =>{
            e.preventDefault()
-           console.log(e, id)
+           console.log(e.target.category.value)
         
         const UpdateHabit= {
              title : e.target.title.value, 
              category : e.target.category.value, 
              description : e.target.description.value, 
              imageURL : e.target.imageURL.value,
-             timestamps: true 
+            //  timestamps: true 
         }
 
-        fetch(`http://localhost:3000/habits/${id}`,{
+        fetch(`http://localhost:3000/habits/${localId}`,{
                     method:"PATCH",
                     headers :{
                         "content-type" : "application/json"
@@ -50,13 +50,17 @@ const MyHabits = () => {
                     })
                     .catch(error => {
                       console.log(error)
-                    })
+                    })}
+
+
+  const handleDelete = (id)=>{
+    console.log(id, "Delete ID.....")
 
 
 
-    // }
+  }                    
 
-}
+
 
     return (
         <div>
@@ -114,8 +118,11 @@ const MyHabits = () => {
         <td>{habit.createdAt}</td>
         <td>
           <div className="join">
-            <input onClick={()=>handleUpdate(habit._id)}  className="join-item btn" type="radio" name="options" aria-label="Update" />
-            <input className="join-item btn" type="radio" name="options" aria-label="Delete" />
+            {/* <input onClick={()=>handleUpdate(habit._id)} htmlFor="my_modal_7"  className="join-item btn" type="radio" name="options" aria-label="Update" /> */}
+      <label onClick={()=>handleUpdate(habit._id)}  htmlFor="my_modal_7"  className="join-item btn" type="radio" name="options" aria-label="Update" >Update</label>
+      {/* <label onClick={()=>handleDelete(habit._id)}  htmlFor="my_modal_7"  className="join-item btn" type="radio" name="options" aria-label="Update" >Delete</label> */}
+            <input onClick={()=>handleDelete(habit._id)} htmlFor="my_modal_7"  className="join-item btn" type="radio" name="options" aria-label="Update" />
+            
             <input className="join-item btn" type="radio" name="options" aria-label="Mark Complete" />
           </div>
         </td>
@@ -129,16 +136,16 @@ const MyHabits = () => {
     </tbody>
   </table>
 
-{/* Modal box open here */}
-            <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-              <div className="modal-box">
 
-                  <div className='m-auto w-full items-center'>
-            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-      <div className="card-body flex">
-        <form >
+{/* The button to open modal */}
+{/* <label htmlFor="my_modal_7" className="btn">open modal</label> */}
+
+{/* Put this part before </body> tag */}
+<input type="checkbox" id="my_modal_7" className="modal-toggle" />
+<div className="modal" role="dialog">
+  <div className="modal-box">
+    <form onSubmit={handleModalSubmit} >
             <fieldset className="fieldset">
-
           
             {/* title */}
           <label className="label">Title</label>
@@ -161,27 +168,13 @@ const MyHabits = () => {
             <option>Play</option>
           </select>
 
-{/* <button className="btn btn-neutral mt-4">Add Habit</button> */}
-
-
-<div className="modal-action">
-                  <form method="dialog">
-                    {/* if there is a button in form, it will close the modal */}
-                    <button className="btn">Close</button>
-                  </form>
-                </div>
+<button className="btn btn-neutral mt-4">Update Habit</button>
 
         </fieldset>
-        </form>
-      </div>
-    </div>
-        </div>
-
-                
-                
-              </div>
-            </dialog>
-
+</form>
+  </div>
+  <label className="modal-backdrop" htmlFor="my_modal_7">Close</label>
+</div>
 
 
 </div>

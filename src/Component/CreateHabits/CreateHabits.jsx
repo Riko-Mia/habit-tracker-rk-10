@@ -4,6 +4,7 @@ import { AuthContext } from '../../Context/AuthContext';
 const CreateHabits = () => {
 
     const {user} = use(AuthContext)
+
     const handleSubmit = (e)=>{
         e.preventDefault()
         
@@ -18,7 +19,7 @@ const CreateHabits = () => {
              createdAt: new Date(),
              timestamps: true 
         }
-        console.log(user)
+        // console.log(user)
 
         fetch("http://localhost:3000/createHabits",{
                     method:"POST",
