@@ -1,5 +1,6 @@
 import React, { use } from 'react';
 import { AuthContext } from '../../Context/AuthContext';
+import Swal from 'sweetalert2';
 
 const CreateHabits = () => {
 
@@ -30,21 +31,30 @@ const CreateHabits = () => {
                 })
                     .then(res=> res.json())
                     .then(data => {
-                        console.log(data, "--------------------", data.createdAt)
+                      e.target.reset()
+                      Swal.fire({
+                                  position: "center",
+                                  icon: "success",
+                                  title: "Successfully Created Habit.",
+                                  showConfirmButton: false,
+                                  timer: 1500
+                                });
+
+                        // console.log(data, "--------------------", data.createdAt)
                     })
                     .catch(error => {
                       console.log(error)
                     })
 
-        console.log(CreateHabit)
+        // console.log(CreateHabit)
     
     }
 
 
 
     return (
-        <div className='m-auto w-full items-center'>
-            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <div className=' w-full items-center my-30'>
+            <div className="  card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
       <div className="card-body flex">
         <form onSubmit={handleSubmit}>
             <fieldset className="fieldset">

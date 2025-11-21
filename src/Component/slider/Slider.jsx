@@ -46,10 +46,10 @@ const Slider = () => {
               
           }}>
             <div  className='w-1/2   m-20 h-full items-center text-start '>
-          <h1 className="subtitle my-5 text-3xl lg:text-6xl font-bold" data-swiper-parallax="-200">
+          <h1 className="subtitle my-5 text-3xl lg:text-6xl font-bold text-[#474E93]" data-swiper-parallax="-200">
             Fun Has <br></br> Unlimited Opportunities <br></br> With Toys Galore!
           </h1>
-          <div className="text" data-swiper-parallax="-100">
+          <div className="text text-[#435663]" data-swiper-parallax="-100">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
               dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla
@@ -77,10 +77,10 @@ const Slider = () => {
               
           }}>
             <div  className='w-1/2   m-20 h-full items-center text-start '>
-          <h1 className="subtitle my-5 text-3xl lg:text-6xl font-bold" data-swiper-parallax="-200">
+          <h1 className="subtitle my-5 text-3xl lg:text-6xl font-bold text-[#8CA9FF]" data-swiper-parallax="-200">
             Fun Has <br></br> Unlimited Opportunities <br></br> With Toys Galore!
           </h1>
-          <div className="text" data-swiper-parallax="-100">
+          <div className="text text-[#313647]" data-swiper-parallax="-100">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
               dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla
@@ -108,10 +108,10 @@ const Slider = () => {
               
           }}>
             <div  className='w-1/2   m-20 h-full items-center text-start '>
-          <h1 className="subtitle my-5 text-3xl lg:text-6xl font-bold" data-swiper-parallax="-200">
+          <h1 className="subtitle my-5 text-3xl lg:text-6xl font-bold text-white" data-swiper-parallax="-200">
             Fun Has <br></br> Unlimited Opportunities <br></br> With Toys Galore!
           </h1>
-          <div className="text" data-swiper-parallax="-100">
+          <div className="text text-gray-200" data-swiper-parallax="-100">
             <p>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam
               dictum mattis velit, sit amet faucibus felis iaculis nec. Nulla

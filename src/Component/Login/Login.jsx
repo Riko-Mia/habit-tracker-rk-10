@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
 import { toast } from 'react-toastify';
 import { GoogleAuthProvider } from 'firebase/auth';
+import Swal from 'sweetalert2';
 
 const Login = () => {
   // const {error, setError} = useState('')
@@ -21,13 +22,27 @@ const Login = () => {
 
     singinUser(email, password)
     .then((result) =>{
-      // {<Navigator to="/"></Navigator>}
-      toast.success("Login Success Done")
-      // e.target.reset()
-      console.log(result)
+      <Navigator to="/"></Navigator>
+      // toast.success("Login Success Done")
+      e.target.reset()
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Login Success.",
+            showConfirmButton: false,
+            timer: 1500
+          });
+      e.target.reset()
+      // console.log(result)
     })
     .catch((error) => {
-      console.log(error)
+      // console.log(error)
+      Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "Something went wrong!",
+  footer: '<a href="#">Why do I have this issue?</a>'
+});
       // setError('User Name or Password wrong!')
     })
   }

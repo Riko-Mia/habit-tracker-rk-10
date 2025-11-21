@@ -2,6 +2,7 @@ import React, { use } from 'react';
 import { Link } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 const Register = () => {
 
@@ -24,9 +25,16 @@ const {createUser} = use(AuthContext)
 
 
     .then((result) =>{
-      console.log(result)
-      toast.success("Register Done")
-      e.target.reset()
+      // console.log(result)
+      // toast.success("Register Done")
+  e.target.reset()
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Registion Success full.",
+      showConfirmButton: false,
+      timer: 1500
+    });
       {<Navigator to="/allHabits"></Navigator>}
     })
     .catch((error) => {

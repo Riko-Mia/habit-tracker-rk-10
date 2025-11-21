@@ -4,7 +4,7 @@ import Home from "../Component/Home/Home";
 import Login from "../Component/Login/Login";
 import Register from "../Component/Register/Register";
 import ErrorPage from "../error/Error";
-import LoginUI from "../Component/Login/LoginUiVerse";
+// import LoginUI from "../Component/Login/LoginUiVerse";
 import PrivetRout from "./PrivetRout";
 import CreateHabits from "../Component/CreateHabits/CreateHabits";
 import AllHabits from "../Component/AllHabits/AllHabits";

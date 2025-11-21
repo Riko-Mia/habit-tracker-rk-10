@@ -28,7 +28,7 @@ const Card = ( {product} ) => {
   // console.log(product.title)
   
 
-  const des = product.description.split(' ').splice(0, 20).join(' ')
+  const des = product.description?.split(' ').splice(0, 20).join(' ')
 // const description = des.splice(0, 20)
 // console.log(des)
 

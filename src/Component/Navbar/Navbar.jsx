@@ -4,6 +4,7 @@ import { AuthContext } from '../../Context/AuthContext';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
   const {user, signOutUser}= use(AuthContext)
@@ -19,6 +20,13 @@ const Navbar = () => {
       alert("User Can't log Out")
       console.log(error)
     })
+    Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Sing Out Success Full",
+              showConfirmButton: false,
+              timer: 1500
+            });
   }
 
 
@@ -31,17 +39,18 @@ const Navbar = () => {
   // }, [user])
   
   // useEffect(()=>{
-  //   console.log(urlImg)
+    console.log(user?.photoURL)
+    // const photoUrl = user?.photoURL
 
   // }, [urlImg])
-
 
 
         const navLink = (
           <div className='text-[20px] space-x-8  lg:flex '>
         <li><NavLink to="/" >Home</NavLink></li>
-        <li><NavLink to="/login" >Log in</NavLink></li>
-        <li><NavLink to="/register" >Register</NavLink></li>
+        {!user?<li><NavLink to="/login" >Log in</NavLink></li>: "" }
+        
+        {/* <li><NavLink to="/register" >Register</NavLink></li> */}
         {user?<li><NavLink to={`/myHabits/${user.email}`} >My Habits</NavLink></li>: "" }
         {user?<li><NavLink to="/createHabits" >Create Habits</NavLink></li>: "" }
         <li><NavLink to="/allHabits" >All Habits</NavLink></li>
@@ -65,7 +74,7 @@ const Navbar = () => {
         {navLink}
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl">daisyUI</a>
+    <a className="btn-ghost text-3xl font-bold" href="/" >Habit Tracker</a>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
@@ -79,7 +88,8 @@ const Navbar = () => {
         <div className="w-10 rounded-full">
           <img
             alt="Tailwind CSS Navbar component"
-             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" /> 
+            //  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" /> 
+             src={user? user.photoURL: "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"  } /> 
         </div>
       </div>
       <ul
@@ -92,7 +102,7 @@ const Navbar = () => {
           </a>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li onClick={handleSingOut}><a>Logout</a></li>
       </ul>
     </div>
 

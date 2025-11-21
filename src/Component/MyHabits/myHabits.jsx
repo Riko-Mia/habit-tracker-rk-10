@@ -6,6 +6,7 @@ const MyHabits = () => {
     const [myHabit, setMyHabit] = useState([])
     const [localId, setLocalId] = useState([])
 
+
     const {user} = use(AuthContext);
     useEffect(() =>{
         if(user?.email){
@@ -47,14 +48,15 @@ const MyHabits = () => {
                 })
                     .then(res=> res.json())
                     .then(data => {
+                      e.target.reset()
                       Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Successfully Updated",
-                        showConfirmButton: false,
-                        timer: 1500
-                      });
-                        console.log(data, "--------------------", data.createdAt)
+                              position: "center",
+                              icon: "success",
+                              title: "Successfully Created Habit.",
+                              showConfirmButton: false,
+                              timer: 1500
+                            });
+                        // console.log(data, "--------------------", data.createdAt)
                     })
                     .catch(error => {
                       console.log(error)
@@ -112,7 +114,9 @@ const MyHabits = () => {
         <div>
 
 
-            all my habits.....{myHabit.length}
+            {/* all my habits.....{myHabit.length} */}
+            {myHabit.length ?
+            
 
             <div>
                 <div className="overflow-x-auto">
@@ -183,13 +187,13 @@ const MyHabits = () => {
           
             {/* title */}
           <label className="label">Title</label>
-          <input type="text" name='title' className="input" placeholder="My Work Start" value={localId.title}/>
+          <input type="text" name='title' className="input" placeholder="My Work Start" />
 {/* Description */}
 <label className="label">Description</label>
-          <input type="text" name='description' className="input" placeholder="Here is your Description" value={localId.description} />
+          <input type="text" name='description' className="input" placeholder="Here is your Description" />
             {/* Image URL */}
           <label className="label">Image URL</label>
-          <input type="url" name='imageURL' className="input" placeholder="Here is Image URL" value={localId.imageURL} />
+          <input type="url" name='imageURL' className="input" placeholder="Here is Image URL" />
 
             {/* Category */}
              <label className="label">Category</label>
@@ -213,6 +217,7 @@ const MyHabits = () => {
 
 </div>
             </div>
+            : <h1  className='p-30 text-9xl font-bold'>You Habit: {myHabit.length}</h1>}
         </div>
     );
 };
