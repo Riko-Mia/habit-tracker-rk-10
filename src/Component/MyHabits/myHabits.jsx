@@ -1,9 +1,10 @@
 import React, { use, useEffect, useState } from 'react';
+import Swal from 'sweetalert2'
 import { AuthContext } from '../../Context/AuthContext';
 
 const MyHabits = () => {
     const [myHabit, setMyHabit] = useState([])
-    const [localId, setLocalId] = useState('')
+    const [localId, setLocalId] = useState([])
 
     const {user} = use(AuthContext);
     useEffect(() =>{
@@ -20,8 +21,8 @@ const MyHabits = () => {
         }
     }, [user?.email])
 
-    const handleUpdate= (id)=>{
-      setLocalId(id)
+    const handleUpdate= (habit)=>{
+      setLocalId(habit)
     }
     
 
@@ -37,7 +38,7 @@ const MyHabits = () => {
             //  timestamps: true 
         }
 
-        fetch(`http://localhost:3000/habits/${localId}`,{
+        fetch(`http://localhost:3000/habits/${localId._id}`,{
                     method:"PATCH",
                     headers :{
                         "content-type" : "application/json"
@@ -46,6 +47,13 @@ const MyHabits = () => {
                 })
                     .then(res=> res.json())
                     .then(data => {
+                      Swal.fire({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Successfully Updated",
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
                         console.log(data, "--------------------", data.createdAt)
                     })
                     .catch(error => {
@@ -53,8 +61,46 @@ const MyHabits = () => {
                     })}
 
 
-  const handleDelete = (id)=>{
-    console.log(id, "Delete ID.....")
+  const handleDelete = (_id)=>{
+      console.log(_id, "Delete ID.....")
+
+
+    Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, delete it!"
+}).then((result) => {
+  if (result.isConfirmed) {
+
+    fetch(`http://localhost:3000/habits/${_id}`,{
+      method:"DELETE"
+    })
+    .then(res=> res.json())
+    .then(data => {
+        if(data.deletedCount){
+              Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success"
+            });
+        }
+        const updateMyHabit = myHabit.filter(habit => habit._id !== _id)
+        setMyHabit(updateMyHabit)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+
+
+  }
+});
+
+
+
 
 
 
@@ -91,19 +137,7 @@ const MyHabits = () => {
         <tr>
     
         <td>
-          {/* <div className="flex items-center gap-3">
-            <div className="avatar">
-              <div className="mask mask-squircle h-12 w-12">
-                <img
-                  src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                  alt="Avatar Tailwind CSS Component" />
-              </div>
-            </div>
-            <div>
-              <div className="font-bold">Hart Hagerty</div>
-              <div className="text-sm opacity-50">United States</div>
-            </div>
-          </div> */}
+          
           <p>{index +1}</p>
         </td>
 
@@ -119,9 +153,9 @@ const MyHabits = () => {
         <td>
           <div className="join">
             {/* <input onClick={()=>handleUpdate(habit._id)} htmlFor="my_modal_7"  className="join-item btn" type="radio" name="options" aria-label="Update" /> */}
-      <label onClick={()=>handleUpdate(habit._id)}  htmlFor="my_modal_7"  className="join-item btn" type="radio" name="options" aria-label="Update" >Update</label>
+      <label onClick={()=>handleUpdate(habit)}  htmlFor="my_modal_7"  className="join-item btn" type="radio" name="options" aria-label="Update" >Update</label>
       {/* <label onClick={()=>handleDelete(habit._id)}  htmlFor="my_modal_7"  className="join-item btn" type="radio" name="options" aria-label="Update" >Delete</label> */}
-            <input onClick={()=>handleDelete(habit._id)} htmlFor="my_modal_7"  className="join-item btn" type="radio" name="options" aria-label="Update" />
+            <input onClick={()=>handleDelete(habit._id)} htmlFor="my_modal_7"  className="join-item btn" type="radio" name="options" aria-label="Delete" />
             
             <input className="join-item btn" type="radio" name="options" aria-label="Mark Complete" />
           </div>
@@ -149,13 +183,13 @@ const MyHabits = () => {
           
             {/* title */}
           <label className="label">Title</label>
-          <input type="text" name='title' className="input" placeholder="My Work Start" />
+          <input type="text" name='title' className="input" placeholder="My Work Start" value={localId.title}/>
 {/* Description */}
 <label className="label">Description</label>
-          <input type="text" name='description' className="input" placeholder="Here is your Description" />
+          <input type="text" name='description' className="input" placeholder="Here is your Description" value={localId.description} />
             {/* Image URL */}
           <label className="label">Image URL</label>
-          <input type="url" name='imageURL' className="input" placeholder="Here is Image URL" />
+          <input type="url" name='imageURL' className="input" placeholder="Here is Image URL" value={localId.imageURL} />
 
             {/* Category */}
              <label className="label">Category</label>
